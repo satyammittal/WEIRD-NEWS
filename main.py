@@ -21,7 +21,7 @@ def main():
 	with open(normal_news_file) as news:
 		for line in news:
 			normalnews = json.loads(line)
-			title = re.sub('[^0-9a-zA-Z]+', ' ', normalnews['title'])
+			title = ''.join([i if ord(i) < 128 else ' ' for i in normalnews['title']])
 			num_words.append( number_words(normalnews['title']))
 			num_stop.append( number_of_stopwords(title) )
 			avg_word_length.append( average_word_len(title) )
