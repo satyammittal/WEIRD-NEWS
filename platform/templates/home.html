@@ -1,0 +1,113 @@
+<html>
+<head>
+  <title>WEIRDNESS DETECT</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel = "stylesheet" type = "text/css" href = "{{ url_for('static',filename='style.css') }}" />
+</head>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Weirdness</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="/about">About Project</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<CENTER>
+<H2>Identification of the weirdness score and ranking weird or odd news stories.
+</H2>
+</CENTER>
+<div class="container">
+<h3>Enter Title</h3>
+  <form  action="" method="post" role="form">
+    {{ form.csrf }}
+    <div class="row">
+        <div class="searchInput">
+            <input type="text" id="name" name="name" class="searchField">
+            <label for="search" class="glyphicon glyphicon-search" rel="tooltip" title="search"></label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+ <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+ 
+        {% for message in messages %}
+            {% if "Error" not in message[1] and "Normal" not in message[1]: %}
+             <div class="progressDiv">
+            <div class="statChartHolder">
+               {% if "25" in message[1]: %}
+                <div class="progress-pie-chart" data-percent="25"><!--Pie Chart -->
+                {% elif "50" in message[1]: %}
+                 <div class="progress-pie-chart" data-percent="50"><!--Pie Chart -->
+                {% elif "75" in message[1]:%}
+                 <div class="progress-pie-chart" data-percent="75"><!--Pie Chart -->
+                {% elif "100" in message[1]: %}
+                 <div class="progress-pie-chart" data-percent="100"><!--Pie Chart -->
+                {% endif %}
+                    <div class="ppc-progress">
+                        <div class="ppc-progress-fill"></div>
+                    </div>
+                    <div class="ppc-percents">
+                    <div class="pcc-percents-wrapper">
+                        <span>%</span>
+                    </div>
+                    </div>
+                </div><!--End Chart -->
+            </div>
+             <div class="statRightHolder">
+           
+                <div class="alert alert-info">
+                <img src="{{ url_for('static',filename='weird.jpg') }}" class="image-weird"/> 
+                </br>
+                <strong> {{ message[1] }} </strong>
+                </div>
+           </div>
+                </div>
+            {% elif "Error" not in message[1] %}
+              <div class="alert alert-info">
+                <CENTER>
+                <strong>{{ message[1] }}</strong> 
+                </CENTER>
+              </div>
+            {% endif %}
+ 
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-warning">
+                {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+ 
+</div>
+<script type="text/javascript">
+  $(function(){
+      var $ppc = $('.progress-pie-chart'),
+        percent = parseInt($ppc.data('percent')),
+        deg = 360*percent/100;
+      if (percent > 50) {
+        $ppc.addClass('gt-50');
+      }
+      $('.ppc-progress-fill').css('transform','rotate('+ deg +'deg)');
+      $('.ppc-percents span').html(percent+'%');
+    });
+   
+</script>
+</html>
+

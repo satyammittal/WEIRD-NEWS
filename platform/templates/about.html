@@ -1,0 +1,94 @@
+<html>
+<head>
+  <title>WEIRDNESS DETECT</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel = "stylesheet" type = "text/css" href = "{{ url_for('static',filename='style.css') }}" />
+</head>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/">Weirdness</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/about">About Project</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<CENTER>
+<H2>Identification of the weirdness score and ranking weird or odd news stories.
+</H2>
+</CENTER>
+<div class="container">
+  <div class="row transparent">
+    <div class="col-md-12">
+        <div class="tuyin first"> 
+      <span class="title">Details</span>
+       <div class="plan-name">IRE Course Project</div>
+        <div class="text">
+        <p>This presentation basically walk you through the roadmap and the final deliverable of our project.<br/>
+Our Project is classifying news into weird and normal and predicting the weirdness level of these news.<br/>
+Final Deliverable: implementation is proving each news ranked from 1-4 as user interface and providing a title weirdness filter that will give the weirdness score(0-3) and tell whether it is weird or not</p>
+        </div>
+      <a type="button" class="btn btn-default" href="https://docs.google.com/presentation/d/15zimJ8bkf_Qg4UrJZK-rT6ktAV_2BPSSGLdROhf5MPo/edit#slide=id.gc6f73a04f_0_0">View <span class="glyphicon glyphicon-plus"></span> </button>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<style>
+body {
+    background: rgba(59,183,120,1);background: -moz-linear-gradient(left, rgba(59,183,120,1) 47%, rgba(71,196,218,1) 100%);background: -webkit-gradient(left top, right top, color-stop(47%, rgba(59,183,120,1)), color-stop(100%, rgba(71,196,218,1)));background: -webkit-linear-gradient(left, rgba(59,183,120,1) 47%, rgba(71,196,218,1) 100%);background: -o-linear-gradient(left, rgba(59,183,120,1) 47%, rgba(71,196,218,1) 100%);background: -ms-linear-gradient(left, rgba(59,183,120,1) 47%, rgba(71,196,218,1) 100%);background: linear-gradient(to right, rgba(59,183,120,1) 47%, rgba(71,196,218,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bb778', endColorstr='#47c4da', GradientType=1 );
+    }
+.transparent .tuyin 
+  {
+  margin-top: 20px; 
+  background-color: rgba(255, 255, 255, 0.37);
+  border: 1px solid #F7F7F7;
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px 0px rgba(181, 181, 181, 0.3);
+  padding: 4%;
+  text-align: center;
+  width: 97%;
+  min-height: 315px;
+  position: relative;
+  margin-bottom: 25px;
+   }
+.transparent .tuyin .title 
+  {
+  text-align: center; 
+  color: #FFF;
+  font-size: 49px; 
+  }
+.transparent .tuyin .plan-name 
+  {
+  font-size: 20px;
+  font-weight: 400;
+  border-bottom: 1px solid #FFF;
+  padding-bottom: 15px;
+  padding: 10px
+  }
+
+.transparent .tuyin .text
+  {
+  margin-top: 20px; 
+  color: #474747;
+  font-weight: 300;
+  margin-bottom: 13px; 
+  font-size: 16px;
+  text-align: justify;
+  }
+
+</style>
+</html>
