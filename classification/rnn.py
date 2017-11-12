@@ -39,7 +39,7 @@ class RNN_Model:
                 title = data['title'].strip('\'').split()
                 
                 temp = []
-                for word in title[:20]:
+                for word in title[:self.title_max]:
                     try:
                         temp.append(self.word_embed[word.lower()])
                     except:
@@ -49,10 +49,10 @@ class RNN_Model:
                 data_embed.append(temp)
 
             size = len(data_embed)
-            self.train += data_embed[:int(size*0.75)]
-            self.test += data_embed[int(size*0.75):]
-            self.train_truth += [0]*(int(size*0.75))
-            self.test_truth += [0]*(size-int(size*0.75))
+            self.train += data_embed[:int(size*0.8)]
+            self.test += data_embed[int(size*0.8):]
+            self.train_truth += [0]*(int(size*0.8))
+            self.test_truth += [0]*(size-int(size*0.8))
         
         with open(self.weird_file) as news:
             data_embed = []
@@ -61,7 +61,7 @@ class RNN_Model:
                 title = data['title'].strip('\'').split()
                 
                 temp = []
-                for word in title[:20]:
+                for word in title[:self.title_max]:
                     try:
                         temp.append(self.word_embed[word.lower()])
                     except:
@@ -71,10 +71,10 @@ class RNN_Model:
                 data_embed.append(temp)
 
             size = len(data_embed)
-            self.train += data_embed[:int(size*0.75)]
-            self.test += data_embed[int(size*0.75):]
-            self.train_truth += [1]*(int(size*0.75))
-            self.test_truth += [1]*(size-int(size*0.75))
+            self.train += data_embed[:int(size*0.8)]
+            self.test += data_embed[int(size*0.8):]
+            self.train_truth += [1]*(int(size*0.8))
+            self.test_truth += [1]*(size-int(size*0.8))
 
         self.train = np.array(self.train)
         self.test = np.array(self.test)
@@ -89,8 +89,9 @@ class RNN_Model:
         #lstm_layer = LSTM(64, return_sequences=False)(title_words)
         lstm_layer = Bidirectional(LSTM(64, return_sequences=True))(title_words)
         attention_layer = AttentionWithContext()(lstm_layer)
-        dropout = Dropout(0.2)(attention_layer)
-        dense = Dense(32, activation='relu')(dropout)
+        dropout = Dropout(0.25)(attention_layer)
+        dense = Dense(64, activation='relu')(dropout)
+        dense = Dense(32, activation='relu')(dense)
         output = Dense(1, activation='sigmoid')(dense)
 
         self.model = Model(inputs=[title_words], outputs=output)
@@ -98,10 +99,10 @@ class RNN_Model:
         
 
     def fit_model(self, inputs, outputs, epochs):
-        filepath="./weights/weights-{epoch:02d}-{val_loss:.2f}.hdf5"
+        filepath="./weights_soft/weights-{epoch:02d}-{val_loss:.2f}.hdf5"
         checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
         callbacks_list = [checkpoint]
-        self.model.fit(inputs, outputs, validation_split=0.25, epochs=epochs, callbacks=callbacks_list, verbose=1)
+        self.model.fit(inputs, outputs, validation_split=0.2, epochs=epochs, callbacks=callbacks_list, verbose=1)
 
     
 def train(normal_file, weird_file, title_max, embed_size):
@@ -117,7 +118,7 @@ def test(normal_file, weird_file, title_max, embed_size):
     model.data_handler()
     model.create_model()
     model.model.summary()
-    model.model.load_weights('./weights/weights-01-0.11.hdf5')
+    model.model.load_weights('./weights_soft/weights-02-0.12.hdf5')
     out = model.model.predict([model.test])
 
     hit = 0 
@@ -128,10 +129,10 @@ def test(normal_file, weird_file, title_max, embed_size):
         elif out[i] <= 0.5 and model.test_truth[i] == 0:
             hit += 1
 
-    print hit,out.shape[0]
+    print float(hit)/float(out.shape[0])
 
 
 if  __name__ == '__main__':
 
-    #train('normalnews.json', 'weirdnews.json', 20, 300)
-    test('normalnews.json', 'weirdnews.json', 20, 300)
+    #train('normalnews.json', 'weirdnews.json', 25, 300)
+    test('normalnews.json', 'weirdnews.json', 25, 300)
