@@ -11,5 +11,5 @@ cd platform
 ``
 <br/>
 ``
-python run.py<br/>
+python run.py
 ``
