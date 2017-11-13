@@ -7,6 +7,9 @@ phase-3, ranking code: weirdrank/<br/>
 application: platform/<br/>
 to run application:<br/>
 ``
-cd platform<br/>
+cd platform
+``
+<br/>
+``
 python run.py<br/>
 ``
